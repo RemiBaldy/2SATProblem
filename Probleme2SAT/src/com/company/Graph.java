@@ -9,7 +9,7 @@ public class Graph<Label> {
 
 
 
-    private class Edge {
+    private class Edge { //blabla
         public int source;
         public int destination;
         public Label label;
