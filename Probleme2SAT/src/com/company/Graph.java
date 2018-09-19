@@ -9,7 +9,7 @@ public class Graph<Label> {
 
 
 
-    private class Edge { //blabla
+    private class Edge {
         public int source;
         public int destination;
         public Label label;
@@ -28,7 +28,7 @@ public class Graph<Label> {
     public Graph(int size) {
         cardinal = size;
         incidency = new ArrayList<LinkedList<Edge>>(size+1);
-        for (int i = 0;i<cardinal+1;i++) { //added +1 to cardinal cause the i = 0 is never affected when implementing the Arraylist, cause the text file graph numbers start to 1 ( index 1).
+        for (int i = 0;i<cardinal ;i++) {
             incidency.add(i, new LinkedList<Edge>());
         }
     }
@@ -38,21 +38,23 @@ public class Graph<Label> {
     }
 
     public void addArc(int source, int dest, Label label) {
-        incidency.get(source).addLast(new Edge(source,dest,label));
+        incidency.get(source-1).addLast(new Edge(source,dest,label));
     }
 
     public String toString() {
-        String result = new String("");
-        result.concat(cardinal + "\n");
-        for (int i = 0; i<cardinal;i++) {
+        String result = new String();
+        result += cardinal + "\n";
+
+        for (int i = 0; i<cardinal ;i++) {
             for (Edge e : incidency.get(i)) {
-                result.concat(e.source + " " + e.destination + " "
-                        + e.label.toString() + "\n");
+
+                result += e.source + " " + e.destination + " "
+                        + e.label.toString() + "\n";
             }
         }
         return result;
-
     }
+
 
     public interface ArcFunction<Label,K> {
         public K apply(int source, int dest, Label label, K accu);

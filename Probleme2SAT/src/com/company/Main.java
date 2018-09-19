@@ -18,8 +18,12 @@ public class Main{
         try {
             Graph graph = txtGraphConverter.initializeGraph();
 
-            GraphPrinter graphPrinter = new GraphPrinter();
-            graphPrinter.showGraph(graph);
+            /*GraphPrinter graphPrinter = new GraphPrinter();
+            graphPrinter.showGraph(graph);*/
+            GraphTransposer tr = new GraphTransposer();
+            graph.iterEdges(tr);
+
+            System.out.println(graph.toString());
         }
         catch (IOException | InputMismatchException ex) {
             ex.printStackTrace();

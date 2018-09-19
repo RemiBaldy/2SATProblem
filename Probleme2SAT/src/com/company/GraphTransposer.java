@@ -2,14 +2,15 @@ package com.company;
 
 public class GraphTransposer implements Graph.ArcConsumer {
 
-    @Override
-    public void apply(int source,int dest,Object o){
-            System.out.println("  source="+source+"  dest="+dest+"  label="+o);
+    Graph transposedGraph;
 
+    GraphTransposer(int size){
+        transposedGraph = new Graph(size);
     }
 
-/*
-    public  transposeGraph(Graph graph){
+    @Override
+    public void apply(int source,int dest,Object o){
+        source = 2;
+    }
 
-            }*/
 }
