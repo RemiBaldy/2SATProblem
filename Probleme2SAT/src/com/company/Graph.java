@@ -12,6 +12,8 @@ import java.util.Scanner;
 public class Graph<Label> {
 
 
+    private int cardinal;
+    private ArrayList<LinkedList<Edge>> incidency;
 
     private class Edge {
         public int source;
@@ -24,9 +26,6 @@ public class Graph<Label> {
             this.label = label;
         }
     }
-
-    private int cardinal;
-    private ArrayList<LinkedList<Edge>> incidency;
 
 
     public Graph(int size) {
@@ -60,7 +59,14 @@ public class Graph<Label> {
         }
         return result;
     }
-
+    
+    public ArrayList<Integer> findAdjacentVertexes(int vertex){
+    	ArrayList<Integer> AdjacentVertexes = new ArrayList<Integer>();
+    	for(Edge e : incidency.get(vertex))
+    		AdjacentVertexes.add(e.destination);
+    	return AdjacentVertexes;
+    }
+    
 
     public interface ArcFunction<Label,K> {
         public K apply(int source, int dest, Label label, K accu);

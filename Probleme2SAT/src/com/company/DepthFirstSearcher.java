@@ -7,43 +7,68 @@ import java.util.function.UnaryOperator;
 public class DepthFirstSearcher {
 
     private Graph graph;
-    private int ancestor;
-    private int beginningProcessDate;
-    private int endingProcessDate;
-    private ArrayList nodeColor;
+    private int date;
+    private ArrayList<VertexInformations> DepthFirstSearchInformations;
+    
+    private class VertexInformations{
+    	public String color;
+    	public int beginningProcessDate;
+    	public int endingProcessDate;
+    	public int ancestor;
+    	
+    	public VertexInformations(){
+    		color = "blanc";    		
+    	}
+    	public String toString() {
+    		return "color : "+color+"  Ancetre : "+ancestor+"  Date debut : "+beginningProcessDate+"  Date fin : "+ endingProcessDate;
+    	}
+    }
 
     public DepthFirstSearcher(Graph graph) {
-        ancestor = 0;
-        beginningProcessDate = 0;
-        endingProcessDate = 0;
+        date = 0;
         this.graph = graph;
-        this.nodeColor = new ArrayList();
+        this.DepthFirstSearchInformations = new ArrayList<VertexInformations>();
         for(int i=0; i < graph.order(); i++)
-            nodeColor.add(i, "blanc");
+            DepthFirstSearchInformations.add(i, new VertexInformations());
     }
 
-    public void DepthFirstSearch(){
-        //graph.iterEdges(new DepthSearchConsumer());
+    public void Search(){
+        graph.iterEdges(new DepthSearchConsumer());
     }
+    public void DepthFirstSearch(int vertex){
+    	this.date +=1;
+    	VertexInformations vertexInfo = DepthFirstSearchInformations.get(vertex);
 
-    public void printColorArray(){
-        System.out.println("size : "+nodeColor.size());
-        ListIterator list = nodeColor.listIterator();
+    	vertexInfo.color = "gris";
+    	vertexInfo.beginningProcessDate = this.date;
+    	
+    	ArrayList<Integer> AdjacentVertexes = graph.findAdjacentVertexes(vertex);
+    	
+    	
+    	for(int adjacentVertex : AdjacentVertexes) {
+    		if(DepthFirstSearchInformations.get(adjacentVertex).color == "blanc") {
+    			System.out.println("Sommet : "+vertex+" a pour adj : "+adjacentVertex);
+    			vertexInfo.ancestor = vertex;
+    			DepthFirstSearch(adjacentVertex);
+    		}
+    	}
+    }
+    
+
+    public void printDepthFirstSearchInformations(){
+        System.out.println("size : "+DepthFirstSearchInformations.size());
+        ListIterator list = DepthFirstSearchInformations.listIterator();
         while(list.hasNext())
-            System.out.println(list.next());
+            System.out.println(list.next().toString());
     }
 
-    public ArrayList<Integer> getNodeColor() {
-        return nodeColor;
-    }
-/*
+
     private class DepthSearchConsumer implements Graph.ArcConsumer{
         @Override
         public void apply(int source, int dest, Object o) {
-            if(nodeColor.get(source) == "blanc")
-                DepthFirstSearcher()
-
+            if(DepthFirstSearchInformations.get(source).color == "blanc")
+                DepthFirstSearch(source);
         }
-    }*/
+    }
 
 }

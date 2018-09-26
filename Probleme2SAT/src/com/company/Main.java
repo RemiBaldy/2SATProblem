@@ -21,7 +21,8 @@ public class Main{
             System.out.println(transposedGraph.toString());
 
             DepthFirstSearcher dFS = new DepthFirstSearcher(graph);
-            dFS.printColorArray();
+            dFS.Search();
+            dFS.printDepthFirstSearchInformations();
         }
         catch (IOException | InputMismatchException ex) {
             ex.printStackTrace();
