@@ -1,8 +1,12 @@
 package com.company;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 
 public class Graph<Label> {
@@ -27,19 +31,21 @@ public class Graph<Label> {
 
     public Graph(int size) {
         cardinal = size;
-        incidency = new ArrayList<LinkedList<Edge>>(size+1);
+        incidency = new ArrayList<LinkedList<Edge>>(size-1);
         for (int i = 0;i<cardinal ;i++) {
             incidency.add(i, new LinkedList<Edge>());
         }
     }
-
+    
     public int order() {
         return cardinal;
     }
 
     public void addArc(int source, int dest, Label label) {
-        incidency.get(source-1).addLast(new Edge(source,dest,label));
+        incidency.get(source).addLast(new Edge(source,dest,label));
     }
+    
+
 
     public String toString() {
         String result = new String();

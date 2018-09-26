@@ -1,5 +1,6 @@
 package com.company;
 
+
 import java.io.IOException;
 import java.util.InputMismatchException;
 
@@ -8,26 +9,24 @@ public class Main{
 
 
        ConverterTextToGraph txtGraphConverter = new ConverterTextToGraph("formula-modified.txt");
-        try {
-            txtGraphConverter.readTextGraphFile();
-        }
-        catch (IOException | InputMismatchException ex) {
-            ex.printStackTrace();
-        }
 
         try {
-            Graph graph = txtGraphConverter.initializeGraph();
-
-            /*GraphPrinter graphPrinter = new GraphPrinter();
-            graphPrinter.showGraph(graph);*/
-            GraphTransposer tr = new GraphTransposer();
-            graph.iterEdges(tr);
-
+            Graph<String> graph = txtGraphConverter.initializeGraph();
             System.out.println(graph.toString());
+
+            GraphTranspose graphTransposer = new GraphTranspose(graph.order());
+            graph.iterEdges(graphTransposer);
+            Graph transposedGraph = graphTransposer.returnGraphMember();
+
+            System.out.println(transposedGraph.toString());
+
+            DepthFirstSearcher dFS = new DepthFirstSearcher(graph);
+            dFS.printColorArray();
         }
         catch (IOException | InputMismatchException ex) {
             ex.printStackTrace();
         }
+
 
 
 
