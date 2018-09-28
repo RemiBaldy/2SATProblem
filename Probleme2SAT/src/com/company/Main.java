@@ -8,7 +8,7 @@ public class Main{
     public static void main(String[] args) {
 
 
-       ConverterTextToGraph txtGraphConverter = new ConverterTextToGraph("formula-modified.txt");
+       ConverterTextToGraph txtGraphConverter = new ConverterTextToGraph("formule-2-sat.txt");
 
         try {
             Graph<String> graph = txtGraphConverter.initializeGraph();
@@ -18,19 +18,15 @@ public class Main{
             graph.iterEdges(graphTransposer);
             Graph transposedGraph = graphTransposer.returnGraphMember();
 
-            System.out.println(transposedGraph.toString());
+            System.out.println(transposedGraph);
 
             DepthFirstSearcher dFS = new DepthFirstSearcher(graph);
             dFS.Search();
-            dFS.printDepthFirstSearchInformations();
+            System.out.println(dFS);
         }
         catch (IOException | InputMismatchException ex) {
             ex.printStackTrace();
         }
-
-
-
-
 
 
     }

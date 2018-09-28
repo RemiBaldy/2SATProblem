@@ -32,43 +32,58 @@ public class DepthFirstSearcher {
             DepthFirstSearchInformations.add(i, new VertexInformations());
     }
 
+    
     public void Search(){
+    	//printDepthFirstSearchInformations();
         graph.iterEdges(new DepthSearchConsumer());
     }
+    
     public void DepthFirstSearch(int vertex){
-    	this.date +=1;
+    	date++;
     	VertexInformations vertexInfo = DepthFirstSearchInformations.get(vertex);
 
     	vertexInfo.color = "gris";
-    	vertexInfo.beginningProcessDate = this.date;
-    	
-    	ArrayList<Integer> AdjacentVertexes = graph.findAdjacentVertexes(vertex);
+    	vertexInfo.beginningProcessDate = date;
     	
     	
-    	for(int adjacentVertex : AdjacentVertexes) {
-    		if(DepthFirstSearchInformations.get(adjacentVertex).color == "blanc") {
-    			System.out.println("Sommet : "+vertex+" a pour adj : "+adjacentVertex);
-    			vertexInfo.ancestor = vertex;
-    			DepthFirstSearch(adjacentVertex);
+    	ArrayList<Integer> AdjacentVertexesIndexes = graph.findAdjacentVertexesIndex(vertex);
+    	
+    	
+    	for(int adjacentVertexIndex : AdjacentVertexesIndexes) {
+    		if(DepthFirstSearchInformations.get(adjacentVertexIndex).color == "blanc") {
+    			DepthFirstSearchInformations.get(adjacentVertexIndex).ancestor = vertex;
+    			System.out.println("Sommet : "+vertex+" a pour adj : "+adjacentVertexIndex);    			
+    			DepthFirstSearch(adjacentVertexIndex);
     		}
     	}
+    	date++;
+    	vertexInfo.endingProcessDate = date;
     }
+ 
     
-
-    public void printDepthFirstSearchInformations(){
-        System.out.println("size : "+DepthFirstSearchInformations.size());
-        ListIterator list = DepthFirstSearchInformations.listIterator();
-        while(list.hasNext())
-            System.out.println(list.next().toString());
-    }
-
-
     private class DepthSearchConsumer implements Graph.ArcConsumer{
         @Override
         public void apply(int source, int dest, Object o) {
-            if(DepthFirstSearchInformations.get(source).color == "blanc")
+            if(DepthFirstSearchInformations.get(source).color == "blanc") {
+            	DepthFirstSearchInformations.get(source).ancestor = -1;
                 DepthFirstSearch(source);
+            }
         }
     }
+    
+    
+    
+    public String toString() {
+    	String returnedStr = new String();
+    	int i=0;
+    	for(VertexInformations vertexInfo : DepthFirstSearchInformations) {
+    		returnedStr += "Vertex : "+i+" "+vertexInfo+"\n";
+    		i++;
+    	}
+    	return returnedStr;
+    }
+
+
+
 
 }

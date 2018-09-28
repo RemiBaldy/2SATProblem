@@ -60,7 +60,7 @@ public class Graph<Label> {
         return result;
     }
     
-    public ArrayList<Integer> findAdjacentVertexes(int vertex){
+    public ArrayList<Integer> findAdjacentVertexesIndex(int vertex){
     	ArrayList<Integer> AdjacentVertexes = new ArrayList<Integer>();
     	for(Edge e : incidency.get(vertex))
     		AdjacentVertexes.add(e.destination);
