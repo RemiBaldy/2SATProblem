@@ -1,12 +1,10 @@
 package com.company;
 
 
-import java.io.File;
-import java.io.IOException;
+
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.LinkedList;
-import java.util.Scanner;
+
 
 
 public class Graph<Label> {
@@ -47,7 +45,7 @@ public class Graph<Label> {
 
 
     public String toString() {
-        String result = new String();
+        String result = "";
         result += cardinal + "\n";
 
         for (int i = 0; i<cardinal ;i++) {
@@ -92,6 +90,4 @@ public class Graph<Label> {
             }
         }
     }
-
-
 }
