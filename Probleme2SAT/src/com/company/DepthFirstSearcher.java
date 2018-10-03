@@ -1,8 +1,9 @@
 package com.company;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+
 
 
 
@@ -29,11 +30,11 @@ public class DepthFirstSearcher {
     		color = "blanc";
     		ancestor = -2;
     	}
-        public Vertex(int indexVertex, int endingProcessDate){
+        /*public Vertex(int indexVertex, int endingProcessDate){
             this.indexVertex = indexVertex;
     	    this.endingProcessDate = endingProcessDate;
             color = "blanc";
-        }
+        }*/
     	public String toString() {
     		return "Sommet : "+indexVertex+"  color : "+color+"  Ancetre : "+ancestor+"  Date debut : "+beginningProcessDate+"  Date fin : "+ endingProcessDate;
     	}
@@ -49,11 +50,12 @@ public class DepthFirstSearcher {
             return vertexInformation.endingProcessDate - this.endingProcessDate;
         }
     }
+    
 
     public DepthFirstSearcher(Graph graph) {
         date = 0;
         this.graph = graph;
-        stronglyConnectedComponents = new ArrayList();
+        stronglyConnectedComponents = new ArrayList<ArrayList<Integer>>();
 
         stronglyConnectedComponentsIndex = -1;
 
@@ -83,8 +85,6 @@ public class DepthFirstSearcher {
             Vertex greatestEndingDateVertex = Collections.min(DepthFirstSearchInformations);
             greatestEndingDateVertex.ancestor = -1;
             this.stronglyConnectedComponentsIndex += 1;
-            /*System.out.println("get "+ this.stronglyConnectedComponentsIndex+"  add "+ greatestEndingDateVertex.indexVertex);
-            System.out.println("boucle princ");*/
             stronglyConnectedComponents.add(new ArrayList<>());
             stronglyConnectedComponents.get(stronglyConnectedComponentsIndex).add(greatestEndingDateVertex.indexVertex);
             DepthFirstSearch(greatestEndingDateVertex.indexVertex, true);
@@ -110,9 +110,7 @@ public class DepthFirstSearcher {
     			DepthFirstSearchInformations.get(adjacentVertexIndex).ancestor = vertex;
     			if(byEndingDate) {
                     stronglyConnectedComponents.get(stronglyConnectedComponentsIndex).add(adjacentVertexIndex); // only usefull in the Depth first search by ending date
-                    //System.out.println("get "+ this.stronglyConnectedComponentsIndex+"  add "+ adjacentVertexIndex);
                 }
-    			//System.out.println("Sommet : "+vertex+" a pour adj : "+adjacentVertexIndex);
     			DepthFirstSearch(adjacentVertexIndex, byEndingDate);
     		}
     	}
@@ -131,7 +129,7 @@ public class DepthFirstSearcher {
         }
     }
 
-    public boolean isFormulaSatisfiable(){
+    public boolean isFormulaSatisfiableOnNonConvertedStronglyConnectedComponents(){
         for (ArrayList<Integer> stronglyConnectedComponent : stronglyConnectedComponents) {
             for(int vertexIndex : stronglyConnectedComponent) {
                 for (int vertexIndex2 : stronglyConnectedComponent) {
@@ -139,14 +137,40 @@ public class DepthFirstSearcher {
                         System.out.println(vertexIndex+"(=x"+(vertexIndex + 1)+")" + " et " + vertexIndex2+"(=-x"+-(vertexIndex2 - graph.order())+")"+ " trouve dans une meme composante : ");
                         return false;
                     }
-                    /*if (vertexIndex + 1 == vertexIndex2 + graph.order()) {
-                        System.out.println(vertexIndex2+"(=x"+(vertexIndex2 + 1)+")" + " et " + vertexIndex+"(=-x"+-(vertexIndex - graph.order())+")"+ " trouve dans une meme composante : ");
-                        return false;
-                    }*/
                 }
             }
         }
         return true;
+    }
+    public boolean isFormulaSatisfiable(){
+        for (ArrayList<Integer> stronglyConnectedComponent : stronglyConnectedComponents) {
+            for(int vertexIndex : stronglyConnectedComponent) {
+                for (int vertexIndex2 : stronglyConnectedComponent) {
+                    if (vertexIndex == -vertexIndex2) {
+                        System.out.println("x" + vertexIndex+" et x"+ -vertexIndex
+                        		+ " trouve dans une meme composante : ");
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    
+    
+    public ArrayList<HashMap<Integer, Boolean>> valuesSatisfyingFormula (){
+    	ArrayList<HashMap<Integer, Boolean>> valuesSatisfyingFormula = new ArrayList<HashMap<Integer, Boolean>>();
+    	int index = 0;
+    	    	
+    	for (ArrayList<Integer> stronglyConnectedComponent : stronglyConnectedComponents) {
+    		valuesSatisfyingFormula.add(new HashMap<Integer, Boolean>());
+            for (int vertexIndex : stronglyConnectedComponent) {
+            	//valuesSatisfyingFormula.get(index).put(vertexIndex);
+            }
+            index++;
+        }
+    	
+    	return valuesSatisfyingFormula;
     }
 
 
@@ -166,6 +190,17 @@ public class DepthFirstSearcher {
             vertexInformations.color = "blanc";
             if (vertexInformations.ancestor == -2) vertexInformations.color = "gris";
         }
+    }
+    
+    public void convertStronglyConnectedComponentsVertexIndexToFormulaVariable(){
+    	for (ArrayList<Integer> stronglyConnectedComponent : stronglyConnectedComponents) {
+            for(int i =0; i < stronglyConnectedComponent.size(); i++) {
+            	if(stronglyConnectedComponent.get(i) < graph.order()/2)
+            		stronglyConnectedComponent.set(i, stronglyConnectedComponent.get(i)+1) ;
+            	else
+            		stronglyConnectedComponent.set(i, stronglyConnectedComponent.get(i)-graph.order()) ;
+            }
+    	}
     }
 
     public void printStronglyConnectedComponents(){

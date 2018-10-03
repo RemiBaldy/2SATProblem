@@ -8,7 +8,7 @@ public class Main{
     public static void main(String[] args) {
 
 
-       TextToGraphConverter txtGraphConverter = new TextToGraphConverter("nonsatisf.txt");
+       TextToGraphConverter txtGraphConverter = new TextToGraphConverter("test.txt");
 
         try {
             Graph<String> graph = txtGraphConverter.initializeGraph();
@@ -25,6 +25,8 @@ public class Main{
             dFS.setGraph(transposedGraph);
             dFS.SearchByEndingDate();
             dFS.printStronglyConnectedComponents();
+            dFS.convertStronglyConnectedComponentsVertexIndexToFormulaVariable();
+            dFS.printStronglyConnectedComponents();            
             if(dFS.isFormulaSatisfiable())
                 System.out.println("Formule Satisfaisable");
             else
