@@ -1,17 +1,17 @@
 package com.company;
 
 
-import java.io.File;
-import java.io.IOException;
+
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.LinkedList;
-import java.util.Scanner;
+
 
 
 public class Graph<Label> {
 
 
+    private int cardinal;
+    private ArrayList<LinkedList<Edge>> incidency;
 
     private class Edge {
         public int source;
@@ -24,9 +24,6 @@ public class Graph<Label> {
             this.label = label;
         }
     }
-
-    private int cardinal;
-    private ArrayList<LinkedList<Edge>> incidency;
 
 
     public Graph(int size) {
@@ -48,7 +45,7 @@ public class Graph<Label> {
 
 
     public String toString() {
-        String result = new String();
+        String result = "";
         result += cardinal + "\n";
 
         for (int i = 0; i<cardinal ;i++) {
@@ -60,7 +57,14 @@ public class Graph<Label> {
         }
         return result;
     }
-
+    
+    public ArrayList<Integer> findAdjacentVertexesIndex(int vertex){
+    	ArrayList<Integer> AdjacentVertexes = new ArrayList<Integer>();
+    	for(Edge e : incidency.get(vertex))
+    		AdjacentVertexes.add(e.destination);
+    	return AdjacentVertexes;
+    }
+    
 
     public interface ArcFunction<Label,K> {
         public K apply(int source, int dest, Label label, K accu);
@@ -86,6 +90,4 @@ public class Graph<Label> {
             }
         }
     }
-
-
 }

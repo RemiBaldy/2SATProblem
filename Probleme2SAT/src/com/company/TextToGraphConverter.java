@@ -5,14 +5,14 @@ import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class ConverterTextToGraph {
+public class TextToGraphConverter {
 
 
     public File file;
     public Scanner scanner;
 
 
-    ConverterTextToGraph(String filePath){
+    TextToGraphConverter(String filePath){
         file = new File(filePath);
     }
 
@@ -58,7 +58,7 @@ public class ConverterTextToGraph {
             return graph;
         }
         scanner.close();
-        return new Graph<String>(0);
+        return new Graph<>(0);
     }
 
 

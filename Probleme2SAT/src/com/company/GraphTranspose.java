@@ -2,7 +2,7 @@ package com.company;
 
 public class GraphTranspose implements Graph.ArcConsumer {
 
-    Graph transposedGraph;
+    private Graph transposedGraph;
 
     GraphTranspose(int size){
         transposedGraph = new Graph(size);
@@ -11,12 +11,12 @@ public class GraphTranspose implements Graph.ArcConsumer {
     @Override
     public void apply(int source,int dest,Object o){
         //System.out.println("source :"+ dest + "  dest :"+ source);
-        transposedGraph.addArc(dest, source, "testtranspose");
+        transposedGraph.addArc(dest, source, "transposedGraph");
     }
 
     public String toString() {return transposedGraph.toString();}
 
-    public Graph returnGraphMember(){
+    public Graph getTransposedGraph(){
         return transposedGraph;
     }
 
