@@ -8,7 +8,7 @@ public class Main{
     public static void main(String[] args) {
 
 
-       TextToGraphConverter txtGraphConverter = new TextToGraphConverter("test.txt");
+       TextToGraphConverter txtGraphConverter = new TextToGraphConverter("nonsatisf.txt");
 
         try {
             Graph<String> graph = txtGraphConverter.initializeGraph();
@@ -24,6 +24,11 @@ public class Main{
             dFS.Search();
             dFS.setGraph(transposedGraph);
             dFS.SearchByEndingDate();
+            dFS.printStronglyConnectedComponents();
+            if(dFS.isFormulaSatisfiable())
+                System.out.println("Formule Satisfaisable");
+            else
+                System.out.println("Formule Antilogique");
         }
         catch (IOException | InputMismatchException ex) {
             ex.printStackTrace();

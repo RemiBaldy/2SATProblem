@@ -25,7 +25,7 @@ public class TextToGraphConverter {
         scanner.close();
     }
 
-    public int[] normalizeEdgeInputToInsertInGraphArray(int source, int destination, int sizeGraph){
+    public int[] modifyEdgeInputsToInsertInGraphArray(int source, int destination, int sizeGraph){
         if(source < 0)
             source += sizeGraph;
         else
@@ -50,7 +50,7 @@ public class TextToGraphConverter {
                 int source = scanner.nextInt();
                 if(scanner.hasNextInt()){
                     int destination = scanner.nextInt();
-                    int[] normalizedInputs= normalizeEdgeInputToInsertInGraphArray(source, destination, graph.order());
+                    int[] normalizedInputs= modifyEdgeInputsToInsertInGraphArray(source, destination, graph.order());
                     graph.addArc(normalizedInputs[0], normalizedInputs[1], "graph");
                 }
             }
