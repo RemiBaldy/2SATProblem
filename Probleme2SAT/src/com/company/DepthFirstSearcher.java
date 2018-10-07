@@ -30,11 +30,7 @@ public class DepthFirstSearcher {
     		color = "blanc";
     		ancestor = -2;
     	}
-        /*public Vertex(int indexVertex, int endingProcessDate){
-            this.indexVertex = indexVertex;
-    	    this.endingProcessDate = endingProcessDate;
-            color = "blanc";
-        }*/
+
     	public String toString() {
     		return "Sommet : "+indexVertex+"  color : "+color+"  Ancetre : "+ancestor+"  Date debut : "+beginningProcessDate+"  Date fin : "+ endingProcessDate;
     	}
@@ -129,6 +125,22 @@ public class DepthFirstSearcher {
         }
     }
 
+
+
+    public boolean isFormulaSatisfiable(){
+        for (ArrayList<Integer> stronglyConnectedComponent : stronglyConnectedComponents) {
+            for(int vertexIndex : stronglyConnectedComponent) {
+                for (int vertexIndex2 : stronglyConnectedComponent) {
+                    if (vertexIndex == -vertexIndex2) {
+                        System.out.println("x" + vertexIndex+" et x"+ -vertexIndex
+                                + " trouve dans une meme composante : ");
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
     public boolean isFormulaSatisfiableOnNonConvertedStronglyConnectedComponents(){
         for (ArrayList<Integer> stronglyConnectedComponent : stronglyConnectedComponents) {
             for(int vertexIndex : stronglyConnectedComponent) {
@@ -142,35 +154,33 @@ public class DepthFirstSearcher {
         }
         return true;
     }
-    public boolean isFormulaSatisfiable(){
-        for (ArrayList<Integer> stronglyConnectedComponent : stronglyConnectedComponents) {
-            for(int vertexIndex : stronglyConnectedComponent) {
-                for (int vertexIndex2 : stronglyConnectedComponent) {
-                    if (vertexIndex == -vertexIndex2) {
-                        System.out.println("x" + vertexIndex+" et x"+ -vertexIndex
-                        		+ " trouve dans une meme composante : ");
-                        return false;
-                    }
+
+    
+    
+    public ArrayList<HashMap<Integer, Boolean>> valuesSatisfyingFormula () {
+        ArrayList<HashMap<Integer, Boolean>> valuesSatisfyingFormula = new ArrayList<HashMap<Integer, Boolean>>();
+        int index = 0;
+
+            for (ArrayList<Integer> stronglyConnectedComponent : stronglyConnectedComponents) {
+                valuesSatisfyingFormula.add(new HashMap<>());
+                for (int vertexIndex : stronglyConnectedComponent) {
+                    if(vertexIndex > 0)
+                        valuesSatisfyingFormula.get(index).put(vertexIndex, Boolean.TRUE);
+                    else
+                        valuesSatisfyingFormula.get(index).put(Math.abs(vertexIndex), Boolean.FALSE);
                 }
-            }
-        }
-        return true;
-    }
-    
-    
-    public ArrayList<HashMap<Integer, Boolean>> valuesSatisfyingFormula (){
-    	ArrayList<HashMap<Integer, Boolean>> valuesSatisfyingFormula = new ArrayList<HashMap<Integer, Boolean>>();
-    	int index = 0;
-    	    	
-    	for (ArrayList<Integer> stronglyConnectedComponent : stronglyConnectedComponents) {
-    		valuesSatisfyingFormula.add(new HashMap<Integer, Boolean>());
-            for (int vertexIndex : stronglyConnectedComponent) {
-            	//valuesSatisfyingFormula.get(index).put(vertexIndex);
-            }
             index++;
-        }
-    	
-    	return valuesSatisfyingFormula;
+            }
+        return valuesSatisfyingFormula;
+    }
+
+    public void printValuesSatisfyingFormula(){
+        ArrayList<HashMap<Integer, Boolean>> valuesSatisfyingFormula = valuesSatisfyingFormula ();
+        for(HashMap<Integer, Boolean> valueSatisfyingFormula : valuesSatisfyingFormula) {
+           for(Integer variable : valueSatisfyingFormula.keySet())
+               System.out.println(" x"+variable+ " = "+valueSatisfyingFormula.get(variable));
+            System.out.println("\n");
+       }
     }
 
 

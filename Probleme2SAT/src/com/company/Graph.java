@@ -46,7 +46,7 @@ public class Graph<Label> {
 
     public String toString() {
         String result = "";
-        result += cardinal + "\n";
+        result += "Graphe de "+cardinal + " sommets :\n";
 
         for (int i = 0; i<cardinal ;i++) {
             for (Edge e : incidency.get(i)) {
