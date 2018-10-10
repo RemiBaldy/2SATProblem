@@ -17,7 +17,6 @@ public class Main{
             GraphTranspose graphTransposer = new GraphTranspose(graph.order());
             graph.iterEdges(graphTransposer);
             Graph transposedGraph = graphTransposer.getTransposedGraph();
-
             System.out.println(transposedGraph);
 
             DepthFirstSearcher dFS = new DepthFirstSearcher(graph);

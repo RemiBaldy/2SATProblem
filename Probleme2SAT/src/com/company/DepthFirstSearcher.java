@@ -40,9 +40,9 @@ public class DepthFirstSearcher {
         Sort by greater endingProcessDate, so min(List<Vertex>) return the Vertex with the highest endingProcessDate value.
          */
         public int compareTo(Vertex vertexInformation) {
-            if(vertexInformation.color != "blanc" && this.color !="blanc")return  vertexInformation.endingProcessDate - this.endingProcessDate;
-            if(vertexInformation.color != "blanc")return -1;
-            if(this.color != "blanc")return 1;
+            if(!vertexInformation.color.equals("blanc") && !this.color.equals("blanc"))return  vertexInformation.endingProcessDate - this.endingProcessDate;
+            if(!vertexInformation.color.equals("blanc"))return -1;
+            if(!this.color.equals("blanc"))return 1;
             return vertexInformation.endingProcessDate - this.endingProcessDate;
         }
     }
@@ -94,7 +94,7 @@ public class DepthFirstSearcher {
     	date++;
     	Vertex vertexInfo = DepthFirstSearchInformations.get(vertex);
 
-    	vertexInfo.color = "gris";
+    	vertexInfo.color = "noir";
     	vertexInfo.beginningProcessDate = date;
     	
     	
@@ -141,6 +141,7 @@ public class DepthFirstSearcher {
         }
         return true;
     }
+    /*
     public boolean isFormulaSatisfiableOnNonConvertedStronglyConnectedComponents(){
         for (ArrayList<Integer> stronglyConnectedComponent : stronglyConnectedComponents) {
             for(int vertexIndex : stronglyConnectedComponent) {
@@ -153,7 +154,7 @@ public class DepthFirstSearcher {
             }
         }
         return true;
-    }
+    }*/
 
     
     
@@ -198,7 +199,7 @@ public class DepthFirstSearcher {
         for (Vertex vertexInformations : DepthFirstSearchInformations) {
             vertexInformations.beginningProcessDate = 0;
             vertexInformations.color = "blanc";
-            if (vertexInformations.ancestor == -2) vertexInformations.color = "gris";
+            if (vertexInformations.ancestor == -2) vertexInformations.color = "noir";
         }
     }
     
@@ -227,10 +228,10 @@ public class DepthFirstSearcher {
     
     
     public String toString() {
-    	String returnedStr = "";
+    	StringBuilder returnedStr = new StringBuilder();
     	for(Vertex vertexInfo : DepthFirstSearchInformations)
-    		returnedStr += vertexInfo+"\n";
-    	return returnedStr;
+    		returnedStr.append(vertexInfo).append("\n");
+    	return returnedStr.toString();
     }
 
 

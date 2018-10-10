@@ -45,17 +45,16 @@ public class Graph<Label> {
 
 
     public String toString() {
-        String result = "";
-        result += "Graphe de "+cardinal + " sommets :\n";
+        StringBuilder result = new StringBuilder();
+        result.append("Graphe de ").append(cardinal).append(" sommets :\n");
 
         for (int i = 0; i<cardinal ;i++) {
             for (Edge e : incidency.get(i)) {
 
-                result += e.source + " " + e.destination + " "
-                        + e.label.toString() + "\n";
+                result.append(e.source).append(" ").append(e.destination).append(" ").append(e.label.toString()).append("\n");
             }
         }
-        return result;
+        return result.toString();
     }
     
     public ArrayList<Integer> findAdjacentVertexesIndex(int vertex){
